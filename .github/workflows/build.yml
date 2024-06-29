@@ -1,64 +1,63 @@
-name: Build and Release
+name: Release
 
-on: [push]
+permissions:
+  contents: write
+
+on:
+  push:
+    tags: [ "v[0-9]+.*" ]
+
+env:
+  CARGO_TERM_COLOR: always
+  RUST_BACKTRACE: 1
+
+defaults:
+  run:
+    shell: bash
 
 jobs:
-  build:
+  create-release:
     runs-on: ubuntu-latest
-
+    permissions:
+      contents: write
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Install Rust
-        uses: actions-rs/toolchain@v1
+      - uses: actions/checkout@v4
+      - uses: taiki-e/create-gh-release-action@v1
         with:
-          toolchain: stable
-          override: true
+          branch: main
+          # (Optional)
+          changelog: CHANGELOG.md
+          # (Optional) Format of title.
+          # [default value: $tag]
+          # [possible values: variables $tag, $version, and any string]
+          # title: $version
+          # (Required) GitHub token for creating GitHub Releases.
+          token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Install cross
-        run: cargo install cross
-
-      - name: Build with cross
-        run: cross build --target x86_64-unknown-linux-gnu --release
-
-      - name: Upload artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: linux-binary
-          path: target/x86_64-unknown-linux-gnu/release/
-
-  release:
-    needs: build
-    runs-on: ubuntu-latest
-
+  upload-assets:
+    needs: create-release
+    strategy:
+      matrix:
+        os:
+          - ubuntu-latest
+          - macos-latest
+          - windows-latest
+    runs-on: ${{ matrix.os }}
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Download artifact
-        uses: actions/download-artifact@v2
+      - uses: actions/checkout@v4
+      - uses: taiki-e/upload-rust-binary-action@v1
         with:
-          name: linux-binary
-          path: ./release
+          # (required) Comma-separated list of binary names (non-extension portion of filename) to build and upload.
+          # Note that glob pattern is not supported yet.
+          bin: tools  #需要添加自己的名称，package.name
+          # (optional) On which platform to distribute the `.tar.gz` file.
+          # [default value: unix]
+          # [possible values: all, unix, windows, none]
+          tar: unix
+          # (optional) On which platform to distribute the `.zip` file.
+          # [default value: windows]
+          # [possible values: all, unix, windows, none]
+          zip: windows
+          # (required) GitHub token for uploading assets to GitHub Releases.
+          token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          draft: false
-          prerelease: false
-
-      - name: Upload Release Asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./release/x86_64-unknown-linux-gnu/release/your_binary_name
-          asset_name: your_binary_name
-          asset_content_type: application/octet-stream
