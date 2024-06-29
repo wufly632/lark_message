@@ -27,6 +27,7 @@
       <change afterPath="$PROJECT_DIR$/../newbee-mall-api-rs/src/lib.rs" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../newbee-mall-api-rs/src/routes/mall.rs" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../newbee-mall-api-rs/src/routes/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.github/workflows/build.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/build.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CHANGELOG.md" beforeDir="false" afterPath="$PROJECT_DIR$/CHANGELOG.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -114,7 +115,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1719655610087</updated>
-      <workItem from="1719655611777" duration="9013000" />
+      <workItem from="1719655611777" duration="9168000" />
     </task>
     <servers />
   </component>

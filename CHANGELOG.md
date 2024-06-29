@@ -21,3 +21,8 @@
 
 - change something
 - add something
+
+## [1.0.7] - 2024-02-22
+
+- change something
+- add something
