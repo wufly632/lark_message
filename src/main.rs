@@ -68,7 +68,7 @@ struct Response {
     complete: bool
 }
 
-#[post("/<token>", data = "<req>")]
+#[get("/<token>", data = "<req>")]
 async fn msg_lark(token: String, req: Json<RequestBody>) -> Json<Response> {
     // 处理接收到的任务
     println!("Received req: {:?}", req);

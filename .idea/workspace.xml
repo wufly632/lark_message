@@ -9,7 +9,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bc5ca3a5-9230-4493-9ee4-917181966b27" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../coraool/trend-util/overlap.xlsx" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../learn-diesel/.env" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../learn-diesel/src/lib.rs" afterDir="false" />
@@ -29,7 +28,6 @@
       <change afterPath="$PROJECT_DIR$/../newbee-mall-api-rs/src/lib.rs" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../newbee-mall-api-rs/src/routes/mall.rs" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../newbee-mall-api-rs/src/routes/mod.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.github/workflows/build.yml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -122,7 +120,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1719655610087</updated>
-      <workItem from="1719655611777" duration="10221000" />
+      <workItem from="1719655611777" duration="10891000" />
     </task>
     <servers />
   </component>
