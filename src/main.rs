@@ -68,14 +68,8 @@ struct Response {
     complete: bool
 }
 
-#[post("/<env>", data = "<req>")]
-async fn msg_lark(env: String, req: Json<RequestBody>) -> Json<Response> {
-    let mut map = HashMap::new();
-    map.insert(String::from("dev"), String::from("f541a977-6909-4bba-b7ee-caf9cc9661e9"));
-    map.insert(String::from("daily"), String::from(""));
-    map.insert(String::from("staging"), String::from(""));
-    map.insert(String::from("prod"), String::from(""));
-    let env_url = map.get(&env).expect("环境不存在");
+#[post("/<token>", data = "<req>")]
+async fn msg_lark(token: String, req: Json<RequestBody>) -> Json<Response> {
     // 处理接收到的任务
     println!("Received req: {:?}", req);
     let task = req.into_inner().task;
@@ -86,7 +80,7 @@ async fn msg_lark(env: String, req: Json<RequestBody>) -> Json<Response> {
     let executor_name = task.executorName;
 
     // 转发到Lark自定义机器人
-    let lark_webhook_url = "https://open.larksuite.com/open-apis/bot/v2/hook/".to_owned() + env_url.as_str();
+    let lark_webhook_url = "https://open.larksuite.com/open-apis/bot/v2/hook/".to_owned() + token.as_str();
     let message = json!({
                 "msg_type": "text",
                 "content": {
